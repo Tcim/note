@@ -1,4 +1,4 @@
 # note
 
-[SNIP](http://www.cqupt.edu.cn/)
+[SNIP](/math.md)
 
