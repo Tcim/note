@@ -4,8 +4,9 @@ note
 
   [18-cvpr SNIP](./paper_review/18_cvpr_SNIP.md)
 
+  [18_cvpr_SNIPER](./paper_review/18_NIPS_SNIPER.md)
+
 - #### 技术应用
 
   [Docker](./single_technology/Docker.md)
 
-2020年8月17日
