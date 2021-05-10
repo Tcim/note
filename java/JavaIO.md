@@ -12,8 +12,9 @@
 不同的数据源类型的输入流子类的继承关系为:
   ![](https://i.loli.net/2021/05/08/d1VxgYJKAOnRas3.png)
 输入流的类和功能如表:
+
 |类|功能|构造参数|
-|-|-|-|
+|--|--|--|
 |FileInputStream|从文件中读入字节流|String(文件名)|
 |ByteArrayInputStream|从字节数组(内存的缓冲区)读入字节流|缓冲区, 字节数组|
 |PipedInputStream|产生用于写入相关PipedOutputStream的数据|PipedOutputStream|
