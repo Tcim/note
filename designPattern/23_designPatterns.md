@@ -162,4 +162,94 @@ Java语言提供了复制实例的clone方法, 是`Object`类的基本方法. �
 - `Composite`: 复合对象, 继承`Component`, 同时提供容器存放component, 但同时其本身也是一个`Component`. 
 ## 12 Decorator Pattern (装饰器模式)
 ### 12.1 definition
+`装饰器模式`是指对基础对象的功能扩充, 不同于直接继承, 使用装饰器模式降低了**装饰器**和**基础对象**的耦合, 使装饰器不用管基础对象的具体实现.
 
+举个例子, 基础对象是一幅画, 有固定的长宽高, 使用装饰器模式对画进行功能扩充相当于对画加一个画框, 画框不依赖于具体的哪幅画, 而是依赖于画的抽象. 画框和画构成了一个整体, 这个整体也是一幅画, **只不过是带画框的画**. 这就是装饰器模式.
+
+### 12.2 类图
+![](https://i.loli.net/2021/05/16/CIJ1sx9gEt6AwQN.png)
+- `Component`: 核心角色, 被装饰的核心角色API.
+- `ConcreteComponent`: 实现了`Component`API的具体角色.
+- `Decorator`: 装饰物. 内部保留了被装饰对象. 另外可以使用装饰器在装饰 `Component`的同时, 增添新的方法.
+- `ConcreteDecorator`: 具体装饰物, 实现具体的装饰. 方法中调用`component`的方法.
+
+## 13 Visitor Pattern (访问者模式)
+### 13.1 definition
+访问者模式是指**将数据的处理与数据结构分离开**的一种设计模式.  一般情况下, 我们将对数据结构中元素的处理放在表示数据结构的类中. 但当这种"处理"有多种或者在添加新的处理方式的时候, 则必须修改表示数据结构的类.
+访问者模式通过编写一个"访问者"的类来访问数据结构中的元素, 并把元素的处理交给访问者.
+### 13.2 类图
+![](https://i.loli.net/2021/05/16/OzTJCmVpG1Ry8S7.png)
+- `Vistor`: 访问者. 负责对数据结构中每个具体元素声明一个用于访问的visit方法.
+- `ConcreteVistor`: 具体的访问者. 实现`Vistor`中定义的接口.
+- `Element`: 元素. `Vistor`角色访问的对象. 声明接受访问者的`accept`方法.
+- `ConcreteElement`: 具体的元素. 实现`Element`定义的接口.
+- `ObjectStructure`: `Element`元素的集合.
+### 13.3 调用关系
+访问者的`visit`方法定义访问具体元素的处理做法. 而元素类中的`accept`类接受`Visitor`对象, 并调用其`visit`方法, 同时传入`this`指针. 具体的调用关系为:
+```java
+# ConcreteElementA 定义
+class ConcreteElement extends Element{
+    @Override
+    public void accept(Visitor visitor){
+        visitor.visit(this);
+    }
+}
+
+
+## ConcreteVistor 定义
+class ConcreteVistor extends Element{
+    public void visit(ConcreteElementA cea){
+        //process cea...
+    }
+    public void visit(ConcreteElementB ceb){
+        //process ceb...
+    }
+}
+
+## 调用者
+class Main{
+    public static void main(String []args){
+        ConcreteElementA cea = new ConcreteElementA();
+        // 接受Vistor访问自己
+        cre.accept(new ConcreteVistor());
+    }
+}
+```
+### 13.4 优缺点
+- 将处理从数据结构中分离出来, 在不改动数据结构类的情况下易于增加新的数据元素处理. 只需要修改或重新实现`Vistor`类
+- 增加新的ConcreteElement角色比较困难, 因为要同步修改所有的`Vistor`类.
+## 14 Chain of Responsibility Pattern (职责链模式)
+### 14.1 definition
+职责链意在淡化"请求方"和"处理方"之间的关联关系, 让双方各自成为可独立复用的组件.
+
+即将多个对象组成一条职责链, 然后按照它们在职责链上的顺序一个一个地找出最终的处理者.
+### 14.2 类图
+![](https://i.loli.net/2021/05/17/5BVnkoIqtULMZgK.png)
+- `Handler`: 抽象处理者, 定义了处理请求的接口. 同时保留了下个处理者的引用, 用作处理请求转发.
+- `ConcreteHandler`: 具体的处理者, 依据自己的处理范围处理或转发请求.
+### 14.3 特点
+- 弱化请求者与处理者之间的关系
+  
+  任务请求者不需要知道具体的执行者, 只需要把目标任务给职责链的第一个处理对象, 有职责链调用决定最终的处理者. 
+- 可以动态改变职责链
+- 职责链上的对象只关注自己的工作
+
+## 15 Facade Pattern (窗口模式)
+### 15.1 definiton
+窗口模式的思想就是在关联复杂的类整理出高层的简单对外接口, 即`Facade`角色, 该类要考虑系统内部各类之间复杂的调用和依赖关系.
+Facade角色可以减少系统接口, 调用者不用关心系统内部处理流程和类间复杂依赖结构, 只需要依据接口提供的**足够高级**的功能. **这样意味着程序与外部的关联弱化了, 可以更容易组件的复用**.
+### 15.2 类图
+![](https://i.loli.net/2021/05/17/piFjVfwRSWngAGk.png)
+- `Facade`: 窗口角色, 封装系统内部复杂细节, 向外部提供高级接口.
+
+## 16 Mediator Pattern (仲裁者模式)
+### 16.1 definition
+仲裁者模式意指**统一指挥**. 对于不同类间的相互约束关系, 不由其直接调用, 而是向统一的**仲裁者**请求, 再由仲裁者统一指挥调用处理.
+
+对于类间约束关系复杂的程序, 如果由任类之间相互调用, 不仅会使调用关系混乱, 更加增加了类间的耦合程度. 仲裁者模式禁止类间调用, 所有的约束和调用都有仲裁者实现.
+### 16.2 类图
+
+## 17 Observer Pattern (观察者模式)
+### 17.1 definition
+观察者模式是指对对象的状态进行监测, 当其发生改变是通知观察者. 观察者模式适用于根据对象状态进行相应处理的场景.
+### 17.2 类图

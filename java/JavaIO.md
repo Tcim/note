@@ -28,3 +28,32 @@
 |PushbackInputStream|具有能弹出一个字节的缓冲区, 可以将读到的最后一个字节回退|InputStream|
 
 ### 1.2 输出流类型
+同输入流一样, 输出流也有相应的类型. 包含:
+- 字节数组
+- 文件
+- 管道
+  
+不同数据类型的输出流继承关系:
+
+输出流的类和功能:
+|类|功能|构造参数|
+|--|--|--|
+|ByteArrayOutputStream|内存缓冲区, 流中的数据放在缓冲区|内存缓冲区(字节数组)|
+|FileOutputStream|将数据流写入文件|字符串, 表示文件名|
+|PipedOutputStream|写入其中的信息会自动作为相关PipedInputStream的输出|PipedInputStream|
+
+`FilterOutputStream`同`FilterInputStream`一样, 是一个抽象类, 用来提供装饰器类接口以定制化特定的输出流. 有如下具体的装饰类:
+|类|功能|构造参数|
+|--|--|--|
+|DataOutputStream|将各种基本数据类型和String类型的对象格式化输出到流中. 使用`writeByte()`, `writeFloat()`等.|OutputStream|
+|PrintStream|用于格式化输出, 以可视化格式打印所有基本数据类型和String类型的对象. 包含`print()`和`pringln`方法|OutputStream|
+|BufferedOutputStream|避免每次发送数据都进行实际的写操作. 可以调用`flush()`函数清空缓冲区.| OutputStream, 可选缓冲区大小|
+
+## 2 字符流
+字符流`Reader`和`Writer`提供兼容**Unicode**编码的面向字符的I/O功能. 设计字符流的**动机是处理字节流仅支持8bit的ASCII字符, 对16bit的Unicode字符处理好**.
+### 2.1 基础字符流
+同字节流类似, 字符流有着高度相似的继承体系.
+- `Reader`系列:
+  ![](https://i.loli.net/2021/05/17/Bej7RJmQc4iqEZu.png)
+- `Writer`系列:
+  ![](https://i.loli.net/2021/05/17/UgSA2XcsG7LRump.png)
