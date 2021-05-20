@@ -51,9 +51,11 @@
 
 ## 2 字符流
 字符流`Reader`和`Writer`提供兼容**Unicode**编码的面向字符的I/O功能. 设计字符流的**动机是处理字节流仅支持8bit的ASCII字符, 对16bit的Unicode字符处理好**.
-### 2.1 基础字符流
+
 同字节流类似, 字符流有着高度相似的继承体系.
 - `Reader`系列:
   ![](https://i.loli.net/2021/05/17/Bej7RJmQc4iqEZu.png)
 - `Writer`系列:
   ![](https://i.loli.net/2021/05/17/UgSA2XcsG7LRump.png)
+
+# 2 NIO
